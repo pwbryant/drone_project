@@ -1,0 +1,9 @@
+pipeline:
+  build:
+    image: python:3.7-slim
+    commands:
+      - pip install pipenv && pipenv install --system
+      - python ./manage.py test
+    when:
+      branch: [ master ]
+      event: [push, pull_request] # trigger step on push and pull events
