@@ -46,3 +46,4 @@ class HelloTest(TestCase):
     def test_greeting_view_response_not_contains(self):
         response = self.client.get(reverse('greetings'))
         self.assertNotContains(response, 'Poop-Man')
+        self.assertNotContains(response, 'Poop-Man2')
