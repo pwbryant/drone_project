@@ -3,7 +3,8 @@
         <title>Drone Test Site</title>
     </head>
     <body>
-        <p>Hello!</p>
-        <p>World!</p>
+        {% for greet in object_list %}
+            <p>{{ greet }} </p>
+        {% endfor %}
     </body>
 </html>
