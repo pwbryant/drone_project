@@ -1,16 +1,16 @@
 pipeline:
     build:
-    image: python:3.7-slim
-    environment:
-        - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
-    commands:
-        - pip install pipenv && pipenv install --system
-        - python ./manage.py test
-    when:
-        branch: [ master ]
-        event: [push, pull_request] # trigger step on push and pull events
+        image: python:3.7-slim
+        environment:
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+        commands:
+            - pip install pipenv && pipenv install --system
+            - python ./manage.py test
+        when:
+            branch: [ master ]
+            event: [push, pull_request] # trigger step on push and pull events
 services:
-    database:
+    db:
         image: postgres
         environment:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
