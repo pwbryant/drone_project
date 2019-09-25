@@ -19,7 +19,6 @@ pipeline:
             repo: pwbryant/drone-proj
             registry: registry.hub.docker.com
             tag: latest
-        file: Dockerfile
         environment:
             - DOCKER_LAUNCH_DEBUG=true
         when:
