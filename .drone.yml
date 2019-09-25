@@ -12,13 +12,13 @@ pipeline:
 
     publish:
         image: plugins/docker
-        settings:
-            username: ${DOCKER_USERNAME}
-            password: ${DOCKER_PASSWORD}
-            email: paulwilliambryant@gmail.com
-            repo: pwbryant/drone-proj
-            registry: registry.hub.docker.com
-            # tags: [ "latest" ]
+        # settings:
+        username: ${DOCKER_USERNAME}
+        password: ${DOCKER_PASSWORD}
+        email: paulwilliambryant@gmail.com
+        registry: registry.hub.docker.com
+        repo: pwbryant/drone-proj
+        tags: latest
         environment:
             - DOCKER_LAUNCH_DEBUG=true
         when:
