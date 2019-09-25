@@ -8,7 +8,7 @@ pipeline:
             - python ./manage.py test
         when:
             branch: [ master ]
-            event: [push, pull_request]
+            #event: [push, pull_request]
 services:
     db:
         image: postgres
