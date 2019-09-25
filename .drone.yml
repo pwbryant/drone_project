@@ -9,6 +9,20 @@ pipeline:
         when:
             branch: [ master ]
             event: [push, pull_request] # trigger step on push and pull events
+    publish:
+        image: plugins/docker
+        username: ${DOCKER_USERNAME}
+        password: ${DOCKER_PASSWORD}
+        email: 
+        repo:
+        tag: latest
+        file: Dockerfile
+        environment:
+            - DOCKER_LAUNCH_DEBUG=true #( usefull for debugging but not necessary )
+        when:
+            branch: [ master ]
+            event: [ push ] # step only triggers on push events
+
 services:
     db:
         image: postgres
