@@ -10,19 +10,19 @@ pipeline:
             branch: [ master ]
             event: [push, pull_request]
 
-	publish:
-		image: plugins/docker
-		username: ${DOCKER_USERNAME}
-		password: ${DOCKER_PASSWORD}
-		email: paulwilliambryant@gmail.com
-		repo: pwbryant/drone-proj
-		tag: latest
-		file: Dockerfile
-		environment:
-			- DOCKER_LAUNCH_DEBUG=true
-		when:
-			branch: [ master ]
-			event: [ push ]
+    publish:
+        image: plugins/docker
+        username: ${DOCKER_USERNAME}
+        password: ${DOCKER_PASSWORD}
+        email: paulwilliambryant@gmail.com
+        repo: pwbryant/drone-proj
+        tag: latest
+        file: Dockerfile
+        environment:
+            - DOCKER_LAUNCH_DEBUG=true
+        when:
+            branch: [ master ]
+            event: [ push ]
 
 services:
     db:
