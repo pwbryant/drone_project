@@ -9,6 +9,7 @@ pipeline:
         when:
             branch: [ master ]
             event: [push, pull_request]
+
 	publish:
 		image: plugins/docker
 		username: ${DOCKER_USERNAME}
