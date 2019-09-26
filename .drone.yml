@@ -16,7 +16,7 @@ pipeline:
         username: ${DOCKER_USERNAME}
         password: ${DOCKER_PASSWORD}
         email: paulwilliambryant@gmail.com
-        registry: docker.io
+        registry: https://registry.hub.docker.com
         repo: pwbryant/drone-proj
         tags: latest
         environment:
