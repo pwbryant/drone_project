@@ -5,7 +5,8 @@ pipeline:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
         commands:
             - pip install pipenv && pipenv install --system
-            - python ./manage.py test
+            - python ./manage.py test hello
+            - python ./manage.py test e2e_tests
         when:
             branch: [ master ]
             event: [push, pull_request]
@@ -43,3 +44,21 @@ services:
         image: postgres
         environment:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    hub:
+        image: selenium/hub:3.141.59
+        ports:
+            - 4444:4444
+
+    chrome:
+        image: selenium/node-chrome:3.141.59
+        depends_on:
+            - hub
+        environment:
+            - HUB_HOST=hub
+
+    firefox:
+        image: selenium/node-firefox:3.141.59
+        depends_on:
+            - hub
+        environment:
+            - HUB_HOST=hub

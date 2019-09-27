@@ -1,18 +1,39 @@
-version: '3.3'
+version: '3.7'
 
 services:
-    web:
-        build: .
-        environment:
-            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
-        command: python manage.py runserver 0.0.0.0:8000
-        volumes:
-            - .:/code/
-        ports:
-            - 8000:8000
-        depends_on:
-            - db
-    db:
-        image: postgres
-        environment:
-            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+
+  web:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+    - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+
+  hub:
+    image: selenium/hub:3.141.59
+    ports:
+      - 4444:4444
+
+  chrome:
+    image: selenium/node-chrome:3.141.59
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+
+  firefox:
+    image: selenium/node-firefox:3.141.59
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub

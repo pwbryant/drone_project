@@ -10,3 +10,9 @@ class Greetings(ListView):
     model = Greeting
     template_name = 'hello/greetings.html'
 
+class Skeetings(ListView):
+    model = Greeting
+    template_name = 'hello/greetings.html'
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
