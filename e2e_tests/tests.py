@@ -20,5 +20,5 @@ class DroneTest(unittest.TestCase):
     def test_drone_in_title(self):
         browser = self.browser
         browser.get('http://web:8000')
-        print('browser title', browser.title)
+        self.assertEqual('Drone', browser.title)
         self.assertIn('Drone', browser.title)
