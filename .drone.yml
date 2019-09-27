@@ -24,7 +24,8 @@ pipeline:
     ssh-deploy:
         image: appleboy/drone-ssh
         pull: true  # always pull the latest version of the `drone-ssh` plugin
-        host: ${HOST} #ec2-3-15-204-120.us-east-2.compute.amazonaws.com  # passed in as a drone secret
+        host: #ec2-3-15-204-120.us-east-2.compute.amazonaws.com  # passed in as a drone secret
+            from_secret: HOST
         user: ${USER} #ubuntu # passed in as a drone secret
         volumes:
             - /home/ubuntu/.ssh/drone-key-pair.pem:/home/ubuntu/.ssh/drone-key-pair.pem
