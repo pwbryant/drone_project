@@ -1,3 +1,6 @@
 *ipynb*
 drone
 poo
+.swp
+*.swp
+.load-drone-env.sh
