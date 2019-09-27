@@ -27,7 +27,7 @@ pipeline:
         host: ec2-3-15-204-120.us-east-2.compute.amazonaws.com  # passed in as a drone secret
         user: ubuntu # passed in as a drone secret
         volumes:
-            - /home/ubuntu/.ssh/:/home/ubuntu/.ssh/
+            - /home/ubuntu/.ssh/drone-key-pair.pem:/home/ubuntu/.ssh/drone-key-pair.pem
         key_path: /home/ubuntu/.ssh/drone-key-pair.pem
         port: 22
         pull: true
