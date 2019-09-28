@@ -1,24 +1,26 @@
 import os
-import unittest
 from selenium import webdriver
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 
-class DroneTest(unittest.TestCase):
+class DroneTest(StaticLiveServerTestCase):
 
-    def setUp(self):
-        # self.browser = webdriver.Firefox()
-        # self.browser = webdriver.Chrome()
+    @classmethod
+    def setUpClass(cls):
+
+        cls.host = 'web'
         caps = {'browserName': os.getenv('BROWSER', 'chrome')}
-        self.browser = webdriver.Remote(
+        cls.browser = webdriver.Remote(
             command_executor='http://hub:4444/wd/hub',
             desired_capabilities=caps
         )
+        super().setUpClass()
 
-    def tearDown(self):
-        self.browser.quit()
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser.quit()
 
     def test_drone_in_title(self):
         browser = self.browser
-        browser.get('http://web:8000')
-        self.assertEqual('Drone', browser.title)
+        browser.get(self.live_server_url)
         self.assertIn('Drone', browser.title)
