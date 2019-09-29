@@ -1,42 +1,39 @@
 version: '3.3'
 
 services:
+    web:
+        build: .
+        environment:
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+        command: gunicorn drone_project.wsgi -b 0.0.0.0:8000
+        volumes:
+            - .:/code/
+        ports:
+            - 8000:8000
+        depends_on:
+            - db
+            - hub
 
-  web:
-    build: .
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code/
-    ports:
-      - 8000:8000
-    depends_on:
-      - hub
-      - db
+    db:
+        image: postgres
+        environment:
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
 
-  db:
-    image: postgres
-    environment:
-        - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
-    ports:
-        - 5432:5432
+    hub:
+        image: selenium/hub:3.141.59
+        ports:
+            - 4444:4444
 
-  hub:
-    image: selenium/hub:3.141.59
-    ports:
-      - 4444:4444
+    chrome:
+        image: selenium/node-chrome:3.141.59
+        environment:
+            - HUB_HOST=hub
+        depends_on:
+            - hub
 
-  chrome:
-    image: selenium/node-chrome:3.141.59
-    depends_on:
-      - hub
-    environment:
-      - HUB_HOST=hub
-
-  firefox:
-    image: selenium/node-firefox:3.141.59
-    depends_on:
-      - hub
-    environment:
-      - HUB_HOST=hub
+    firefox:
+        image: selenium/node-firefox:3.141.59
+        environment:
+            - HUB_HOST=hub
+        depends_on:
+            - hub

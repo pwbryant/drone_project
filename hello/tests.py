@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import Greeting
-from .views import Skeetings
 
 # Create your tests here.
 
@@ -48,6 +47,3 @@ class HelloTest(TestCase):
         response = self.client.get(reverse('greetings'))
         self.assertNotContains(response, 'Poop-Man')
         self.assertNotContains(response, 'Poop-Man2')
-
-    def test_skeeting_view(self):
-        self.assertEqual(Skeetings.template_name,  'hello/greetings.html')

@@ -3,9 +3,14 @@
         <title>Drone Test Site</title>
     </head>
     <body>
-        <p>sup?</p>
-        {% for greet in object_list %}
-            <p>{{ greet }} </p>
-        {% endfor %}
+        <form action="{% url 'greetings' %}" method="post">
+            {% csrf_token %}
+            {{ form.greeting }}
+            <input type='submit' value='Add Greeting'/>
+            <p>sup?</p>
+            {% for greet in object_list %}
+                <p>{{ greet }} </p>
+            {% endfor %}
+        </form>
     </body>
 </html>
