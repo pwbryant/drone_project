@@ -12,3 +12,5 @@ x
 *.log
 .coverage
 x
+staticfiles
+htmlcov
