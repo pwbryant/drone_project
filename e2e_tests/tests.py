@@ -34,7 +34,7 @@ class DroneTest(StaticLiveServerTestCase):
             'input[type="submit"]'
         )
         submit[0].click()
-        print('Greetings', Greetings.objects.all().count())
+        print('Greeting', Greeting.objects.all().count())
         new = browser.find_elements_by_tag_name('p')[-1].text
         self.assertEqual('Howdyz', new)
 
