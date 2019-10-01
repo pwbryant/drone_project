@@ -1,12 +1,12 @@
 import pytest
 from django.test import TestCase
 from django.urls import reverse
-from .models import Greeting
+from hello.models import Greeting
 
 pytestmark = pytest.mark.django_db
 # Create your tests here.
 
-class HelloTest:
+class TestHello(TestCase):
 
     def setUp(self):
         Greeting.objects.create(greeting='Yo')
