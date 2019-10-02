@@ -11,6 +11,17 @@ pipeline:
             branch: [ master ]
             event: [push, pull_request]
 
+    publish:
+        image: plugins/docker
+        repo: pwbryant/drone-proj
+        tags: latest
+        secrets: [docker_username, docker_password]
+        environment:
+            - DOCKER_LAUNCH_DEBUG=true
+        when:
+            branch: [ master ]
+            event: [ push ]
+
 services:
     db:
         image: postgres
