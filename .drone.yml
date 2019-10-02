@@ -6,7 +6,7 @@ pipeline:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
         commands:
             - pip install pipenv && pipenv install --system
-            - python ./manage.py test hello
+            - pytest hello
         when:
             branch: [ master ]
             event: [push, pull_request]
