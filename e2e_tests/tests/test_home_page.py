@@ -14,8 +14,7 @@ class DroneTest(StaticLiveServerTestCase):
         browser = Browser(
             driver_name="remote",
             url='http://hub:4444/wd/hub',
-            browser=os.getenv('BROWSER', 'chrome'),
-            name="Test of chrome"
+            browser=os.getenv('BROWSER', 'chrome')
         )
         cls.browser = browser
 
