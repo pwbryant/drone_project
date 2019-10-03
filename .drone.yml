@@ -8,6 +8,9 @@ pipeline:
             - pip install pipenv && pipenv install --system
             - python manage.py migrate
             - pytest hello
+            - export BROWSER=chrome
+            - pytest e2e_tests
+            - export BROWSER=firefox
             - pytest e2e_tests
         when:
             branch: [ master ]
