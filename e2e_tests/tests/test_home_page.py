@@ -11,10 +11,12 @@ class DroneTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        browser_flavor = os.getenv('BROWSER')
+        assert browser_flavor == 'chrome'
         browser = Browser(
             driver_name="remote",
             url='http://hub:4444/wd/hub',
-            browser=os.getenv('BROWSER', 'chrome')
+            browser=browser_flavor
         )
         cls.browser = browser
 
