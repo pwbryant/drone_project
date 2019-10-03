@@ -1,5 +1,6 @@
 import os
 from splinter import Browser
+from selenium import webdriver
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
@@ -11,7 +12,7 @@ class DroneTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        browser_flavor = os.getenv('BROWSER')
+        browser_flavor = os.getenv('BROWSER', 'chrome')
         browser = Browser(
             driver_name="remote",
             url='http://hub:4444/wd/hub',
@@ -23,6 +24,12 @@ class DroneTest(StaticLiveServerTestCase):
     def tearDownClass(cls):
         cls.browser.quit()
         super().tearDownClass()
+
+    def test_css_load(self):
+        browser = self.browser
+        browser.visit(f'{self.live_server_url}')
+        hidden = browser.find_by_id('css_test_hidden')
+        assert not hidden.visible
 
     def test_save_greetings(self):
         browser = self.browser
