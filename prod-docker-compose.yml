@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+    web:
+        image: pwbryant/drone-pro
+        environment:
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+        command: gunicorn drone_project.wsgi -b 0.0.0.0:8000
+        volumes:
+            - ./staticfiles:/code/staticfiles
+        ports:
+            - 8000:8000
+        depends_on:
+            - db
+
+    db:
+        image: postgres
+        environment:
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./nginx/:/etc/nginx/conf.d
+            - ./staticfiles:/static
+        ports:
+            - 80:80
+        depends_on:
+            - web
