@@ -10,6 +10,7 @@ from hello.models import Greeting
 class DroneTest(StaticLiveServerTestCase):
 
     host = 'web'
+    port = 8888
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
