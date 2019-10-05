@@ -1,3 +1,6 @@
 #css_test_hidden {
     visibility: hidden;
 }
+.red {
+    color: red;
+}
