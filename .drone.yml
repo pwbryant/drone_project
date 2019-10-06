@@ -50,9 +50,9 @@ pipeline:
             - echo "containers"
             - docker ps
             - echo "migrate"
-            - docker-compose -f prod-docker-compose.yml exec web python manage.py migrate
+            - docker-compose -f prod-docker-compose.yml exec -T web python manage.py migrate
             - echo "collect static"
-            - docker-compose -f prod-docker-compose.yml exec web python manage.py collectstatic --no-input
+            - docker-compose -f prod-docker-compose.yml exec -T web python manage.py collectstatic --no-input
         when:
             event: [push, tag, deployment]
 
