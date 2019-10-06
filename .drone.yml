@@ -47,7 +47,11 @@ pipeline:
             - git checkout orig/master -- prod-docker-compose.yml
             - docker-compose -f prod-docker-compose.yml pull web
             - docker-compose -f prod-docker-compose.yml up -d --build
+            - echo "containers"
+            - docker ps
+            - echo "migrate"
             - docker-compose -f prod-docker-compose.yml exec web python manage.py migrate
+            - echo "collect static"
             - docker-compose -f prod-docker-compose.yml exec web python manage.py collectstatic --no-input
         when:
             event: [push, tag, deployment]
