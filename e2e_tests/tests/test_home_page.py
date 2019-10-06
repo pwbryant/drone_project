@@ -33,6 +33,12 @@ class DroneTest(StaticLiveServerTestCase):
         hidden = browser.find_by_id('css_test_hidden')
         assert not hidden.visible
 
+    def test_home_page(self):
+        browser = self.browser
+        browser.visit(f'{self.live_server_url}')
+        first_p = browser.find_by_tag('p').first.text
+        assert 'Friend' in first_p
+
     def test_save_greetings(self):
         browser = self.browser
         browser.visit(f'{self.live_server_url}/greetings/')
