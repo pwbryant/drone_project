@@ -40,7 +40,15 @@ pipeline:
         command_timeout: 2m
         script:
             - cd /home/ubuntu/drone_proj  # or whereever you put your `deploy.sh`
-            - sh deploy.sh
+            # - sh deploy.sh
+            - docker-compose -f prod-docker-compose.yml down
+            - docker rmi $(docker images --filter dangling=true --quiet)
+            - git fetch
+            - git checkout orig/master -- prod-docker-compose.yml
+            - docker-compose -f prod-docker-compose.yml pull web
+            - docker-compose -f prod-docker-compose.yml up -d --build
+            - docker-compose -f prod-docker-compose.yml exec web python manage.py migrate
+            - docker-compose -f prod-docker-compose.yml exec web python manage.py collectstatic --no-input
         when:
             event: [push, tag, deployment]
 
