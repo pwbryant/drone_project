@@ -7,7 +7,7 @@ pipeline:
         commands:
             - pip install pipenv && pipenv install --system
             - python manage.py migrate
-            - pytest hello
+            - pytest hello --splinter-webdriver=remote --splinter-remote-url=http://hub:4444/wd/hub
             - export BROWSER=chrome
             - pytest e2e_tests
             - export BROWSER=firefox

@@ -30,6 +30,7 @@ class DroneTest(StaticLiveServerTestCase):
     def test_css_load(self):
         browser = self.browser
         browser.visit(f'{self.live_server_url}')
+        print(f'{self.live_server_url}')
         hidden = browser.find_by_id('css_test_hidden')
         assert not hidden.visible
 
