@@ -16,45 +16,45 @@ pipeline:
             branch: [ master ]
             event: [push, pull_request]
 
-    publish:
-        image: plugins/docker
-        repo: pwbryant/drone-proj
-        tags: latest
-        secrets: [docker_username, docker_password]
-        environment:
-            - DOCKER_LAUNCH_DEBUG=true
-        when:
-            branch: [ master ]
-            event: [ push ]
+    # publish:
+    #     image: plugins/docker
+    #     repo: pwbryant/drone-proj
+    #     tags: latest
+    #     secrets: [docker_username, docker_password]
+    #     environment:
+    #         - DOCKER_LAUNCH_DEBUG=true
+    #     when:
+    #         branch: [ master ]
+    #         event: [ push ]
 
-    ssh-deploy:
-        image: appleboy/drone-ssh
-        pull: true  # always pull the latest version of the `drone-ssh` plugin
-        host: ec2-3-15-204-120.us-east-2.compute.amazonaws.com  # passed in as a drone secret
-        username: ubuntu # passed in as a drone secret
-        volumes:
-            - /home/ubuntu/.ssh/drone-key-pair.pem:/home/ubuntu/.ssh/drone-key-pair.pem
-        key_path: /home/ubuntu/.ssh/drone-key-pair.pem
-        port: 22
-        pull: true
-        command_timeout: 2m
-        script:
-            - cd /home/ubuntu/drone_proj  # or whereever you put your `deploy.sh`
-            # - sh deploy.sh
-            - docker-compose -f prod-docker-compose.yml down
-            - docker rmi $(docker images --filter dangling=true --quiet)
-            - git fetch
-            - git checkout orig/master -- prod-docker-compose.yml
-            - docker-compose -f prod-docker-compose.yml pull web
-            - docker-compose -f prod-docker-compose.yml up -d --build
-            - echo "containers"
-            - docker ps
-            - echo "migrate"
-            - docker-compose -f prod-docker-compose.yml exec -T web python manage.py migrate
-            - echo "collect static"
-            - docker-compose -f prod-docker-compose.yml exec -T web python manage.py collectstatic --no-input
-        when:
-            event: [push, tag, deployment]
+    # ssh-deploy:
+    #     image: appleboy/drone-ssh
+    #     pull: true  # always pull the latest version of the `drone-ssh` plugin
+    #     host: ec2-3-15-204-120.us-east-2.compute.amazonaws.com  # passed in as a drone secret
+    #     username: ubuntu # passed in as a drone secret
+    #     volumes:
+    #         - /home/ubuntu/.ssh/drone-key-pair.pem:/home/ubuntu/.ssh/drone-key-pair.pem
+    #     key_path: /home/ubuntu/.ssh/drone-key-pair.pem
+    #     port: 22
+    #     pull: true
+    #     command_timeout: 2m
+    #     script:
+    #         - cd /home/ubuntu/drone_proj  # or whereever you put your `deploy.sh`
+    #         # - sh deploy.sh
+    #         - docker-compose -f prod-docker-compose.yml down
+    #         - docker rmi $(docker images --filter dangling=true --quiet)
+    #         - git fetch
+    #         - git checkout orig/master -- prod-docker-compose.yml
+    #         - docker-compose -f prod-docker-compose.yml pull web
+    #         - docker-compose -f prod-docker-compose.yml up -d --build
+    #         - echo "containers"
+    #         - docker ps
+    #         - echo "migrate"
+    #         - docker-compose -f prod-docker-compose.yml exec -T web python manage.py migrate
+    #         - echo "collect static"
+    #         - docker-compose -f prod-docker-compose.yml exec -T web python manage.py collectstatic --no-input
+    #     when:
+    #         event: [push, tag, deployment]
 
 services:
     db:
